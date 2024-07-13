@@ -1,61 +1,57 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { questions } from '../data/questions';
+import React from 'react';
 import styled from 'styled-components';
+import { questions } from '../data/questions';
 
 const QuestionContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 48px;
+  border: solid black 2px;
+  padding: 12px;
+  height: fit-content;
+`;
+
+const OptionContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+`;
+
+const StyledRadio = styled.input`
+  margin-right: 10px;
+  accent-color: #4caf50; /* You can customize this color */
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+
+  &:checked {
+    border: 2px solid #4caf50;
+  }
 `;
 
 export const Question = ({
   player,
-  playerPosition,
-  chaserPosition,
-  setPlayerPosition,
-  setChaserPosition,
+  questionIndex,
+  selectedOption,
+  setSelectedOption,
 }) => {
-  console.log(player);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [questionIndex, setQuestionIndex] = useState(0);
-
-  const navigate = useNavigate();
-
-  const handleSubmit = () => {
-    if (selectedOption !== null) {
-      setQuestionIndex(questionIndex + 1);
-      if (selectedOption === questions[questionIndex].answer) {
-        if (player === 'Player') {
-          playerPosition < 7
-            ? setPlayerPosition(playerPosition + 1)
-            : navigate('/result');
-        } else {
-          chaserPosition < playerPosition
-            ? setChaserPosition(chaserPosition + 1)
-            : navigate('/result');
-        }
-      }
-      console.log('selectedOption', selectedOption);
-    }
-  };
-
   return (
     <QuestionContainer>
       <h1>{player}</h1>
       <h2>{questions[questionIndex].question}</h2>
 
       {questions[questionIndex].options.map((option, index) => (
-        <div key={index}>
-          <input
+        <OptionContainer key={index}>
+          <StyledRadio
             type="radio"
-            name="option"
+            name={`option-${player}`}
+            checked={selectedOption === index}
             onChange={() => setSelectedOption(index)}
           />
           {option}
-        </div>
+        </OptionContainer>
       ))}
-      <button onClick={handleSubmit}>Submit</button>
     </QuestionContainer>
   );
 };
