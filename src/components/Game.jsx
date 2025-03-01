@@ -1,29 +1,9 @@
 import React, { useState } from 'react';
 import { ChaseBoard } from './ChaseBoard';
 import { Question } from './Question';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { questions } from '../data/questions';
-
-const BoardContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-`;
-
-const Button = styled.button`
-  width: 150px;
-  height: 40px;
-  font-size: larger;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+import { BoardContainer, Button, Container } from '../styles/styles';
 
 export const Game = () => {
   const [playerPosition, setPlayerPosition] = useState(2);
